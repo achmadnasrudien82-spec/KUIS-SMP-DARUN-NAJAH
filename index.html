@@ -1,0 +1,579 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ulangan Harian Ceria - SMP</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Google Fonts: Fredoka & Plus Jakarta Sans -->
+    <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        brand: {
+                            pink: '#FF6B9B',
+                            yellow: '#FFB800',
+                            blue: '#4D96FF',
+                            purple: '#9B51E0',
+                            green: '#6BCB77',
+                            bg: '#F3F8FF'
+                        }
+                    },
+                    fontFamily: {
+                        display: ['Fredoka', 'sans-serif'],
+                        body: ['Plus Jakarta Sans', 'sans-serif']
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        body {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            background-color: #F3F8FF;
+            background-image: radial-gradient(#4D96FF 0.75px, transparent 0.75px), radial-gradient(#FF6B9B 0.75px, #F3F8FF 0.75px);
+            background-size: 30px 30px;
+            background-position: 0 0, 15px 15px;
+        }
+        .font-display { font-family: 'Fredoka', sans-serif; }
+        .bouncy { transition: all 0.2s cubic-bezier(0.68, -0.55, 0.265, 1.55); }
+        .bouncy:hover { transform: translateY(-4px) scale(1.02); }
+        .bouncy:active { transform: translateY(1px) scale(0.98); }
+    </style>
+</head>
+<body class="min-h-screen flex flex-col justify-between text-slate-800 antialiased p-4 sm:p-6">
+
+    <!-- Header Navbar Ceria -->
+    <header class="max-w-4xl mx-auto w-full mb-6">
+        <div class="bg-white/90 backdrop-blur-md rounded-3xl p-4 sm:p-5 shadow-xl border-4 border-white flex justify-between items-center">
+            <div class="flex items-center space-x-3">
+                <div class="bg-brand-yellow p-3 rounded-2xl text-white shadow-md transform -rotate-6">
+                    <i data-lucide="sparkles" class="w-7 h-7 stroke-[2.5]"></i>
+                </div>
+                <div>
+                    <h1 class="font-display text-xl sm:text-2xl font-bold text-slate-800 tracking-wide">Kuis Ceria SMP 🎈</h1>
+                    <p class="text-xs sm:text-sm font-semibold text-slate-500">Bahasa Indonesia & Pengetahuan Umum</p>
+                </div>
+            </div>
+            <span class="bg-brand-pink/10 text-brand-pink font-display font-bold px-4 py-2 rounded-2xl text-xs sm:text-sm border-2 border-brand-pink/20 hidden sm:inline-block">
+                Kelas 7 / SMP
+            </span>
+        </div>
+    </header>
+
+    <!-- MAIN CONTAINER -->
+    <main class="max-w-3xl mx-auto w-full flex-1 flex flex-col justify-center my-auto">
+
+        <!-- 1. HALAMAN LOGIN / DATA DIRI -->
+        <section id="loginScreen" class="bg-white rounded-3xl p-6 sm:p-10 shadow-xl border-4 border-white relative overflow-hidden transition-all duration-300">
+            <div class="absolute -top-10 -right-10 w-32 h-32 bg-brand-blue/10 rounded-full blur-xl pointer-events-none"></div>
+            <div class="absolute -bottom-10 -left-10 w-32 h-32 bg-brand-pink/10 rounded-full blur-xl pointer-events-none"></div>
+
+            <div class="text-center mb-8">
+                <div class="inline-flex bg-brand-blue/10 p-3 rounded-full mb-3 text-brand-blue">
+                    <i data-lucide="user-check" class="w-8 h-8"></i>
+                </div>
+                <h2 class="font-display text-2xl sm:text-3xl font-bold text-slate-800">Yuk, Isi Data Dirimu!</h2>
+                <p class="text-slate-500 text-sm mt-1">Isi dengan teliti sebelum memulai ulangan ya ✨</p>
+            </div>
+
+            <form id="loginForm" onsubmit="handleLogin(event)" class="space-y-5">
+                <div>
+                    <label class="block font-display text-slate-700 text-sm font-bold mb-2">Nama Lengkap Siswa</label>
+                    <div class="relative">
+                        <i data-lucide="smile" class="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-slate-400"></i>
+                        <input type="text" id="inputName" required placeholder="Contoh: Budi Pratama" 
+                            class="w-full pl-12 pr-4 py-3.5 bg-slate-50 border-2 border-slate-200 rounded-2xl focus:outline-none focus:border-brand-blue focus:bg-white font-medium transition text-slate-800">
+                    </div>
+                </div>
+
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                    <div>
+                        <label class="block font-display text-slate-700 text-sm font-bold mb-2">Pilih Kelas</label>
+                        <div class="relative">
+                            <i data-lucide="school" class="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-slate-400"></i>
+                            <select id="inputClass" required class="w-full pl-12 pr-4 py-3.5 bg-slate-50 border-2 border-slate-200 rounded-2xl focus:outline-none focus:border-brand-blue focus:bg-white font-medium transition text-slate-800 appearance-none">
+                                <option value="" disabled selected>Pilih Kelas...</option>
+                                <option value="7">Kelas 7</option>
+                                <option value="8">Kelas 8</option>
+                                <option value="9">Kelas 9</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div>
+                        <label class="block font-display text-slate-700 text-sm font-bold mb-2">Nomor Absen</label>
+                        <div class="relative">
+                            <i data-lucide="hash" class="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-slate-400"></i>
+                            <input type="number" id="inputAbsent" min="1" max="50" required placeholder="Contoh: 12" 
+                                class="w-full pl-12 pr-4 py-3.5 bg-slate-50 border-2 border-slate-200 rounded-2xl focus:outline-none focus:border-brand-blue focus:bg-white font-medium transition text-slate-800">
+                        </div>
+                    </div>
+                </div>
+
+                <button type="submit" class="w-full mt-6 bg-brand-purple hover:bg-purple-600 text-white font-display font-bold text-lg py-4 rounded-2xl shadow-lg shadow-purple-200 bouncy flex items-center justify-center space-x-2">
+                    <span>Mulai Kerjakan Soal</span>
+                    <i data-lucide="arrow-right" class="w-5 h-5"></i>
+                </button>
+            </form>
+        </section>
+
+        <!-- 2. HALAMAN KUIS -->
+        <section id="quizScreen" class="hidden bg-white rounded-3xl p-6 sm:p-8 shadow-xl border-4 border-white transition-all duration-300">
+            <!-- Top Bar: Info Siswa & Progress -->
+            <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center pb-4 mb-6 border-b-2 border-slate-100 gap-3">
+                <div class="flex items-center space-x-3">
+                    <div class="bg-brand-blue/10 p-2.5 rounded-2xl text-brand-blue">
+                        <i data-lucide="book-open" class="w-6 h-6"></i>
+                    </div>
+                    <div>
+                        <h3 id="displayStudentInfo" class="font-display font-bold text-slate-800 text-base">Siswa</h3>
+                        <p class="text-xs font-semibold text-slate-400">Ulangan Harian Online</p>
+                    </div>
+                </div>
+                <div class="w-full sm:w-auto flex items-center space-x-3">
+                    <div class="flex-1 sm:w-36 bg-slate-100 h-3 rounded-full overflow-hidden">
+                        <div id="progressBar" class="bg-brand-yellow h-full w-0 transition-all duration-300 rounded-full"></div>
+                    </div>
+                    <span id="questionProgressText" class="font-display text-sm font-bold text-slate-600 min-w-[50px] text-right">1 / 5</span>
+                </div>
+            </div>
+
+            <!-- Indikator Nomor Soal (Grid Interactive Buttons) -->
+            <div class="mb-6">
+                <p class="text-xs font-bold text-slate-400 uppercase tracking-wider mb-2 font-display">Navigasi Soal:</p>
+                <div id="numberGrid" class="flex flex-wrap gap-2"></div>
+            </div>
+
+            <!-- Area Soal -->
+            <div class="mb-8">
+                <div class="bg-slate-50 p-5 rounded-2xl border-2 border-slate-100 mb-5">
+                    <span id="questionCategory" class="inline-block px-3 py-1 bg-brand-blue/10 text-brand-blue font-display font-bold text-xs rounded-lg mb-2">Mapel</span>
+                    <h2 id="questionText" class="text-lg sm:text-xl font-bold text-slate-800 leading-relaxed">
+                        Teks Soal...
+                    </h2>
+                </div>
+
+                <!-- Pilihan Jawaban -->
+                <div id="optionsContainer" class="space-y-3"></div>
+            </div>
+
+            <!-- Tombol Navigasi Bawah -->
+            <div class="flex justify-between items-center pt-4 border-t-2 border-slate-100">
+                <button id="prevBtn" onclick="navigateQuestion(-1)" class="px-5 py-3 rounded-2xl border-2 border-slate-200 font-display font-bold text-slate-600 hover:bg-slate-100 bouncy flex items-center space-x-2">
+                    <i data-lucide="chevron-left" class="w-5 h-5"></i>
+                    <span>Kembali</span>
+                </button>
+                <button id="nextBtn" onclick="navigateQuestion(1)" class="px-6 py-3 bg-brand-blue hover:bg-blue-600 text-white font-display font-bold rounded-2xl shadow-md shadow-blue-200 bouncy flex items-center space-x-2">
+                    <span>Selanjutnya</span>
+                    <i data-lucide="chevron-right" class="w-5 h-5"></i>
+                </button>
+                <button id="submitBtn" onclick="finishQuiz()" class="hidden px-6 py-3 bg-brand-green hover:bg-green-600 text-white font-display font-bold rounded-2xl shadow-md shadow-green-200 bouncy flex items-center space-x-2">
+                    <span>Kirim Jawaban</span>
+                    <i data-lucide="send" class="w-5 h-5"></i>
+                </button>
+            </div>
+        </section>
+
+        <!-- 3. HALAMAN HASIL -->
+        <section id="resultScreen" class="hidden bg-white rounded-3xl p-6 sm:p-10 shadow-xl border-4 border-white transition-all duration-300 text-center">
+            <div id="badgeContainer" class="inline-flex p-4 rounded-full mb-3">
+                <i id="resultIcon" data-lucide="trophy" class="w-12 h-12"></i>
+            </div>
+            
+            <h2 id="resultTitle" class="font-display text-2xl sm:text-3xl font-bold text-slate-800">Hasil Ulangan Kamu!</h2>
+            <p id="resultSubtitle" class="text-slate-500 text-sm mt-1">Berikut adalah rekap skor yang kamu dapatkan.</p>
+
+            <!-- Card Skor -->
+            <div class="my-6 p-6 bg-slate-50 rounded-3xl border-2 border-slate-100 max-w-sm mx-auto">
+                <span class="text-xs font-bold text-slate-400 uppercase tracking-widest font-display">Skor Akhir</span>
+                <div class="font-display text-5xl sm:text-6xl font-extrabold text-slate-800 my-2">
+                    <span id="finalScore">0</span><span class="text-2xl text-slate-400">/100</span>
+                </div>
+                <div id="statusBadge" class="inline-block px-4 py-1.5 rounded-full text-xs font-display font-bold">
+                    Status
+                </div>
+            </div>
+
+            <!-- Detail Statistik -->
+            <div class="grid grid-cols-2 gap-4 max-w-sm mx-auto mb-8">
+                <div class="bg-green-50 p-4 rounded-2xl border-2 border-green-100 flex items-center justify-center space-x-3">
+                    <i data-lucide="check-circle-2" class="w-6 h-6 text-brand-green"></i>
+                    <div class="text-left">
+                        <p class="text-xs text-slate-500 font-semibold">Benar</p>
+                        <p id="correctCount" class="font-display text-lg font-bold text-slate-800">0 Soal</p>
+                    </div>
+                </div>
+                <div class="bg-rose-50 p-4 rounded-2xl border-2 border-rose-100 flex items-center justify-center space-x-3">
+                    <i data-lucide="x-circle" class="w-6 h-6 text-rose-500"></i>
+                    <div class="text-left">
+                        <p class="text-xs text-slate-500 font-semibold">Salah</p>
+                        <p id="wrongCount" class="font-display text-lg font-bold text-slate-800">0 Soal</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Pembahasan Detail -->
+            <div class="text-left mb-8">
+                <h3 class="font-display text-lg font-bold text-slate-800 mb-4 flex items-center space-x-2">
+                    <i data-lucide="file-text" class="w-5 h-5 text-brand-purple"></i>
+                    <span>Pembahasan Detail Jawaban:</span>
+                </h3>
+                <div id="reviewContainer" class="space-y-4"></div>
+            </div>
+
+            <!-- Tombol Aksi -->
+            <div class="flex flex-col sm:flex-row justify-center items-center gap-3 border-t-2 border-slate-100 pt-6">
+                <button onclick="sendToWhatsApp()" class="w-full sm:w-auto px-6 py-3.5 bg-green-500 hover:bg-green-600 text-white font-display font-bold rounded-2xl shadow-md shadow-green-100 bouncy flex items-center justify-center space-x-2">
+                    <i data-lucide="message-square" class="w-5 h-5"></i>
+                    <span>Kirim ke WA Guru</span>
+                </button>
+                <button onclick="restartQuiz()" class="w-full sm:w-auto px-6 py-3.5 bg-brand-yellow hover:bg-amber-500 text-slate-900 font-display font-bold rounded-2xl shadow-md shadow-amber-100 bouncy flex items-center justify-center space-x-2">
+                    <i data-lucide="rotate-ccw" class="w-5 h-5"></i>
+                    <span>Ulangi Ujian</span>
+                </button>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- Footer Ceria -->
+    <footer class="max-w-4xl mx-auto w-full text-center mt-6 text-xs text-slate-400 font-semibold">
+        <p>© Ulangan Harian Ceria SMP • Dibuat khusus untuk Pembelajaran Interaktif</p>
+    </footer>
+
+    <!-- JAVASCRIPT VANILLA -->
+    <script>
+        // DATA SOAL (Mata Pelajaran: Bahasa Indonesia & Pengetahuan Umum SMP)
+        const quizData = [
+            {
+                id: 1,
+                category: "Bahasa Indonesia",
+                question: "Manakah di bawah ini yang merupakan kalimat opini (pendapat)?",
+                options: [
+                    "Indonesia adalah negara kepulauan terbesar di dunia.",
+                    "Pemandangan matahari terbit di Pantai Sanur sangat indah.",
+                    "Kucing merupakan hewan mamalia berkaki empat.",
+                    "Air membeku pada suhu 0 derajat Celsius."
+                ],
+                correct: 1,
+                explanation: "Kalimat nomor 2 mengandung kata 'sangat indah' yang merupakan penilaian subjektif/pendapat (opini)."
+            },
+            {
+                id: 2,
+                category: "Pengetahuan Umum",
+                question: "Lagu kebangsaan Indonesia Raya diciptakan oleh...",
+                options: [
+                    "Ir. Soekarno",
+                    "W.R. Supratman",
+                    "C. Simanjuntak",
+                    "Moh. Hatta"
+                ],
+                correct: 1,
+                explanation: "Lagu Indonesia Raya diciptakan oleh Wage Rudolf Supratman (W.R. Supratman)."
+            },
+            {
+                id: 3,
+                category: "Bahasa Indonesia",
+                question: "Gabungan kata yang memiliki arti khusus dan tidak bisa diartikan kata per kata disebut...",
+                options: [
+                    "Ungkapan (Idiom)",
+                    "Sinonim",
+                    "Antonim",
+                    "Peribahasa"
+                ],
+                correct: 0,
+                explanation: "Ungkapan atau idiom adalah gabungan kata yang membentuk arti baru (contoh: 'panjang tangan' berarti suka mencuri)."
+            },
+            {
+                id: 4,
+                category: "Pengetahuan Umum",
+                question: "Candi Borobudur yang merupakan candi Buddha terbesar di dunia terletak di provinsi...",
+                options: [
+                    "Jawa Timur",
+                    "Jawa Barat",
+                    "Jawa Tengah",
+                    "DI Yogyakarta"
+                ],
+                correct: 2,
+                explanation: "Candi Borobudur secara administratif terletak di Kabupaten Magelang, Jawa Tengah."
+            },
+            {
+                id: 5,
+                category: "Bahasa Indonesia",
+                question: "Lawan kata (antonim) dari kata 'Optimis' adalah...",
+                options: [
+                    "Semangat",
+                    "Pesimis",
+                    "Humoris",
+                    "Kritis"
+                ],
+                correct: 1,
+                explanation: "Antonim dari optimis (yakin/berharapan baik) adalah pesimis (ragu/berpandangan buruk)."
+            }
+        ];
+
+        // STATE APLIKASI
+        let studentData = { name: '', class: '', absent: '' };
+        let currentQuestionIndex = 0;
+        let userAnswers = {};
+
+        // INITALIZATION
+        document.addEventListener('DOMContentLoaded', () => {
+            lucide.createIcons();
+        });
+
+        // 1. HANDLER LOGIN
+        function handleLogin(e) {
+            e.preventDefault();
+            studentData.name = document.getElementById('inputName').value.trim();
+            studentData.class = document.getElementById('inputClass').value;
+            studentData.absent = document.getElementById('inputAbsent').value;
+
+            if (!studentData.name || !studentData.class || !studentData.absent) {
+                alert("Silakan lengkapi semua data diri terlebih dahulu!");
+                return;
+            }
+
+            document.getElementById('displayStudentInfo').innerText = `${studentData.name} (${studentData.class} / Absen ${studentData.absent})`;
+            
+            showScreen('quizScreen');
+            renderQuizScreen();
+        }
+
+        // SWITCH SCREEN
+        function showScreen(screenId) {
+            document.getElementById('loginScreen').classList.add('hidden');
+            document.getElementById('quizScreen').classList.add('hidden');
+            document.getElementById('resultScreen').classList.add('hidden');
+
+            document.getElementById(screenId).classList.remove('hidden');
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        // 2. RENDER QUIZ SCREEN
+        function renderQuizScreen() {
+            const currentQ = quizData[currentQuestionIndex];
+
+            // Progress Text & Bar
+            document.getElementById('questionProgressText').innerText = `${currentQuestionIndex + 1} / ${quizData.length}`;
+            const progressPercent = ((currentQuestionIndex + 1) / quizData.length) * 100;
+            document.getElementById('progressBar').style.width = `${progressPercent}%`;
+
+            // Question Content
+            document.getElementById('questionCategory').innerText = currentQ.category;
+            document.getElementById('questionText').innerText = `${currentQuestionIndex + 1}. ${currentQ.question}`;
+
+            // Options
+            const optionsContainer = document.getElementById('optionsContainer');
+            optionsContainer.innerHTML = '';
+
+            const optionLabels = ['A', 'B', 'C', 'D'];
+            currentQ.options.forEach((opt, idx) => {
+                const isSelected = userAnswers[currentQuestionIndex] === idx;
+                const btn = document.createElement('button');
+                btn.type = 'button';
+                btn.onclick = () => selectOption(idx);
+                
+                btn.className = `w-full p-4 rounded-2xl border-2 text-left font-medium transition-all duration-200 flex items-center justify-between bouncy ${
+                    isSelected 
+                    ? 'border-brand-blue bg-blue-50 text-brand-blue shadow-md' 
+                    : 'border-slate-200 bg-white text-slate-700 hover:border-slate-300 hover:bg-slate-50'
+                }`;
+
+                btn.innerHTML = `
+                    <div class="flex items-center space-x-3">
+                        <span class="w-8 h-8 rounded-xl font-display font-bold flex items-center justify-center text-sm ${
+                            isSelected ? 'bg-brand-blue text-white' : 'bg-slate-100 text-slate-500'
+                        }">${optionLabels[idx]}</span>
+                        <span class="text-sm sm:text-base font-semibold">${opt}</span>
+                    </div>
+                    ${isSelected ? '<i data-lucide="check-circle-2" class="w-5 h-5 text-brand-blue"></i>' : ''}
+                `;
+                optionsContainer.appendChild(btn);
+            });
+
+            // Render Navigasi Grid
+            renderNumberGrid();
+
+            // Handle Nav Buttons
+            document.getElementById('prevBtn').style.visibility = currentQuestionIndex === 0 ? 'hidden' : 'visible';
+            if (currentQuestionIndex === quizData.length - 1) {
+                document.getElementById('nextBtn').classList.add('hidden');
+                document.getElementById('submitBtn').classList.remove('hidden');
+            } else {
+                document.getElementById('nextBtn').classList.remove('hidden');
+                document.getElementById('submitBtn').classList.add('hidden');
+            }
+
+            lucide.createIcons();
+        }
+
+        function renderNumberGrid() {
+            const grid = document.getElementById('numberGrid');
+            grid.innerHTML = '';
+            quizData.forEach((_, idx) => {
+                const isAnswered = userAnswers.hasOwnProperty(idx);
+                const isCurrent = idx === currentQuestionIndex;
+
+                let btnClass = "w-10 h-10 rounded-xl font-display font-bold text-sm transition-all flex items-center justify-center ";
+                if (isCurrent) {
+                    btnClass += "bg-brand-purple text-white ring-4 ring-purple-100 scale-105";
+                } else if (isAnswered) {
+                    btnClass += "bg-green-100 text-brand-green border-2 border-green-300";
+                } else {
+                    btnClass += "bg-slate-100 text-slate-500 hover:bg-slate-200";
+                }
+
+                const btn = document.createElement('button');
+                btn.className = btnClass;
+                btn.innerText = idx + 1;
+                btn.onclick = () => {
+                    currentQuestionIndex = idx;
+                    renderQuizScreen();
+                };
+                grid.appendChild(btn);
+            });
+        }
+
+        function selectOption(index) {
+            userAnswers[currentQuestionIndex] = index;
+            renderQuizScreen();
+        }
+
+        function navigateQuestion(step) {
+            currentQuestionIndex += step;
+            renderQuizScreen();
+        }
+
+        // 3. KALKULASI & HALAMAN HASIL
+        function calculateScore() {
+            let correct = 0;
+            quizData.forEach((q, idx) => {
+                if (userAnswers[idx] === q.correct) {
+                    correct++;
+                }
+            });
+            return {
+                score: Math.round((correct / quizData.length) * 100),
+                correct,
+                wrong: quizData.length - correct
+            };
+        }
+
+        function finishQuiz() {
+            const answeredCount = Object.keys(userAnswers).length;
+            if (answeredCount < quizData.length) {
+                if (!confirm(`Kamu baru menjawab ${answeredCount} dari ${quizData.length} soal. Yakin ingin mengumpulkan?`)) {
+                    return;
+                }
+            }
+
+            const { score, correct, wrong } = calculateScore();
+
+            // --- OPTIONAL: KONTROL PENGIRIMAN KE GOOGLE FORM ---
+            // Jika Anda mengintegrasikan dengan Google Form, hilangkan komentar kode di bawah:
+            /*
+            const GOOGLE_FORM_URL = "https://docs.google.com/forms/d/e/YOUR_FORM_ID/formResponse";
+            let detailJawaban = quizData.map((q, i) => `S${i+1}:${userAnswers[i] ?? '-'}`).join(', ');
+            
+            const formData = new FormData();
+            formData.append("entry.123456", studentData.name);
+            formData.append("entry.789101", studentData.class);
+            formData.append("entry.112131", studentData.absent);
+            formData.append("entry.415161", score);
+            formData.append("entry.718192", detailJawaban);
+
+            fetch(GOOGLE_FORM_URL, { method: "POST", mode: "no-cors", body: formData })
+                .catch(err => console.error("Error sending to form:", err));
+            */
+
+            renderResults(score, correct, wrong);
+            showScreen('resultScreen');
+        }
+
+        function renderResults(score, correct, wrong) {
+            document.getElementById('finalScore').innerText = score;
+            document.getElementById('correctCount').innerText = `${correct} Soal`;
+            document.getElementById('wrongCount').innerText = `${wrong} Soal`;
+
+            const badgeContainer = document.getElementById('badgeContainer');
+            const resultIcon = document.getElementById('resultIcon');
+            const statusBadge = document.getElementById('statusBadge');
+            const resultTitle = document.getElementById('resultTitle');
+
+            if (score >= 70) {
+                badgeContainer.className = "inline-flex p-4 rounded-full mb-3 bg-green-100 text-brand-green";
+                resultIcon.setAttribute('data-lucide', 'trophy');
+                statusBadge.className = "inline-block px-4 py-1.5 rounded-full text-xs font-display font-bold bg-green-100 text-green-700";
+                statusBadge.innerText = "LULUS (Sangat Baik) 🌟";
+                resultTitle.innerText = "Luar Biasa, Kamu Hebat! 🎉";
+            } else {
+                badgeContainer.className = "inline-flex p-4 rounded-full mb-3 bg-amber-100 text-brand-yellow";
+                resultIcon.setAttribute('data-lucide', 'award');
+                statusBadge.className = "inline-block px-4 py-1.5 rounded-full text-xs font-display font-bold bg-amber-100 text-amber-700";
+                statusBadge.innerText = "PERLU BELAJAR LAGI 📚";
+                resultTitle.innerText = "Tetap Semangat Ya! 💪";
+            }
+
+            // Pembahasan
+            const reviewContainer = document.getElementById('reviewContainer');
+            reviewContainer.innerHTML = '';
+            const optionLabels = ['A', 'B', 'C', 'D'];
+
+            quizData.forEach((q, idx) => {
+                const userAns = userAnswers[idx];
+                const isCorrect = userAns === q.correct;
+
+                const item = document.createElement('div');
+                item.className = `p-4 rounded-2xl border-2 ${isCorrect ? 'bg-green-50/50 border-green-200' : 'bg-rose-50/50 border-rose-200'}`;
+
+                item.innerHTML = `
+                    <div class="flex items-start justify-between gap-2 mb-2">
+                        <span class="font-display font-bold text-slate-800 text-sm">${idx + 1}. ${q.question}</span>
+                        <span class="px-2.5 py-1 rounded-lg text-xs font-display font-bold ${isCorrect ? 'bg-green-200 text-green-800' : 'bg-rose-200 text-rose-800'}">
+                            ${isCorrect ? 'Benar' : 'Salah'}
+                        </span>
+                    </div>
+                    <div class="text-xs space-y-1 font-semibold text-slate-600 mb-2">
+                        <p>Jawaban Kamu: <span class="${isCorrect ? 'text-green-600' : 'text-rose-600'} font-bold">${userAns !== undefined ? optionLabels[userAns] + '. ' + q.options[userAns] : 'Tidak dijawab'}</span></p>
+                        ${!isCorrect ? `<p>Kunci Jawaban: <span class="text-green-600 font-bold">${optionLabels[q.correct]}.${q.options[q.correct]}</span></p>` : ''}
+                    </div>
+                    <div class="bg-white/80 p-2.5 rounded-xl text-xs text-slate-500 border border-slate-200/60">
+                        <span class="font-bold text-slate-700">Penjelasan:</span> ${q.explanation}
+                    </div>
+                `;
+                reviewContainer.appendChild(item);
+            });
+
+            lucide.createIcons();
+        }
+
+        // KIRIM VIA WHATSAPP GURU
+        function sendToWhatsApp() {
+            const { score } = calculateScore();
+            const nomorWA = "6281234567890"; // GANTI NIK DENGAN NOMOR WA GURU (FORMAT 62)
+            
+            let message = `*Laporan Hasil Ulangan Harian Online*\n\n` +
+                          `👤 *Nama*: ${studentData.name}\n` +
+                          `🏫 *Kelas*: ${studentData.class}\n` +
+                          `🔢 *No. Absen*: ${studentData.absent}\n` +
+                          `🎯 *Nilai Akhir*: ${score} / 100\n\n` +
+                          `Terima kasih Pak/Bu Guru!`;
+
+            window.open(`https://wa.me/${nomorWA}?text=${encodeURIComponent(message)}`, '_blank');
+        }
+
+        // RESTART QUIZ
+        function restartQuiz() {
+            userAnswers = {};
+            currentQuestionIndex = 0;
+            showScreen('loginScreen');
+        }
+    </script>
+</body>
+</html>
